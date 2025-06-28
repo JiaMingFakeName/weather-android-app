@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- 基础应用主题 -->
+    <style name="Base.Theme.Weather" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- 在此自定义您的主题 -->
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorSecondary">@color/red</item>
+    </style>
+
+    <style name="Theme.Weather" parent="Base.Theme.Weather" />
+
+    <!-- 添加无操作栏主题 -->
+    <style name="Theme.Weather.NoActionBar" parent="Theme.Weather">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+</resources>

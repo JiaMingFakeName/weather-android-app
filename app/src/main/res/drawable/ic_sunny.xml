@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- 太阳圆心 -->
+    <path
+        android:fillColor="@color/sun_yellow"
+        android:pathData="M12,12m-3,0a3,3 0,1 1,6 0a3,3 0,1 1,-6 0" />
+
+    <!-- 太阳光芒 -->
+    <path
+        android:fillColor="@android:color/holo_orange_light"
+        android:pathData="M12,1L12,3M12,21L12,23M4.22,4.22L5.64,5.64M18.36,18.36L19.78,19.78M1,12L3,12M21,12L23,12M4.22,19.78L5.64,18.36M18.36,5.64L19.78,4.22"
+        android:strokeWidth="2"
+        android:strokeLineCap="round" />
+</vector>

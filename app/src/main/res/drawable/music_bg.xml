@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <color android:color="#80000000"/> <!-- 半透明黑色遮罩 -->
+    </item>
+    <item>
+        <bitmap
+            android:src="@drawable/cloud"
+            android:gravity="center|fill"/>
+    </item>
+</layer-list>

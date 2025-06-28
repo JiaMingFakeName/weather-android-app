@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">weather</string>
+    <string-array name="diary_filter_options">
+        <item>全部日记</item>
+        <item>今日日记</item>
+        <item>本周日记</item>
+        <item>本月日记</item>
+    </string-array>
+</resources>
