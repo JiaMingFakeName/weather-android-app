@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,10 +29,14 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.example.weather.adapter.DailyForecastAdapter;
 import com.example.weather.adapter.HourlyForecastAdapter;
+import com.example.weather.manager.SettingsManager;
+import com.example.weather.manager.UserManager;
 import com.example.weather.manager.WeatherNotificationManager;
+import com.example.weather.model.AppSettings;
 import com.example.weather.model.CityData;
 import com.example.weather.model.DailyForecast;
 import com.example.weather.model.HourlyForecast;
+import com.example.weather.model.User;
 import com.example.weather.model.WeatherData;
 import com.example.weather.model.WeatherWarning;
 import com.example.weather.service.DiaryReminderService;
@@ -48,6 +52,8 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     private WeatherNotificationManager notificationManager;
 
+    // 添加背景和按钮视图引用
+    private LinearLayout rootLayout;
     private Button btnSearch;
     private ImageButton btnLocation, btnMusic, btnSettings, btnDiary;
     private TextView tvCurrentCity, tvTemperature, tvWeatherCondition, tvFeelsLike;
@@ -76,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initViews();
+        // 应用颜色主题
+        applyColorTheme();
         initServices();
         setupClickListeners();
         setupAdapters();
@@ -87,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        rootLayout = findViewById(R.id.root_layout);
         btnSearch = findViewById(R.id.btnSearch);
         btnLocation = findViewById(R.id.btnLocation);
         tvCurrentCity = findViewById(R.id.tvCurrentCity);
@@ -257,6 +266,35 @@ public class MainActivity extends AppCompatActivity {
         btnDiary.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, DiaryListActivity.class));
         });
+    }
+
+    private void applyColorTheme() {
+        // 获取当前主题设置
+        SettingsManager settingsManager = new SettingsManager(this);
+        UserManager userManager = new UserManager(this);
+        User currentUser = userManager.getCurrentUser();
+
+        String theme = "default";
+        if (currentUser != null) {
+            AppSettings userSettings = settingsManager.getUserSettings(currentUser.getId());
+            if (userSettings != null) {
+                theme = userSettings.getTheme();
+            }
+        }
+
+        // 应用深色模式颜色
+        if ("dark".equals(theme)) {
+            // 设置深色背景
+            rootLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_background_color));
+
+            // 设置按钮深色背景
+            int darkButtonColor = ContextCompat.getColor(this, R.color.dark_button_color);
+            btnSearch.setBackgroundColor(darkButtonColor);
+            btnLocation.setBackgroundColor(darkButtonColor);
+            btnSettings.setBackgroundColor(darkButtonColor);
+            btnMusic.setBackgroundColor(darkButtonColor);
+            btnDiary.setBackgroundColor(darkButtonColor);
+        }
     }
 
     private void loadDefaultWeather() {
@@ -516,5 +554,12 @@ public class MainActivity extends AppCompatActivity {
         if (locationClient != null) {
             locationClient.stop();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 检查主题是否变化
+        applyColorTheme();
     }
 }

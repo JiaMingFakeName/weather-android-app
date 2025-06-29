@@ -2,7 +2,6 @@ package com.example.weather;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -158,10 +157,16 @@ public class SettingsActivity extends AppCompatActivity {
 
         if (settingsManager.updateSettings(userSettings)) {
             Toast.makeText(this, "设置已保存", Toast.LENGTH_SHORT).show();
+
+            // 通知MainActivity刷新颜色
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("theme_changed", true);
+            setResult(RESULT_OK, resultIntent);
         } else {
             Toast.makeText(this, "保存失败", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private String getThemeDisplayName(String theme) {
         switch (theme) {
